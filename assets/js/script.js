@@ -1,36 +1,47 @@
-//var VIN= document.getElementById("insert-vin").innerHTML;
-var VIN = "3GCRKSE34AG162050";
-var api = `https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/${VIN}?format=json`;
-const carDetailsObj = {};
-// var apiCallAsync = async () => {
-//   const res = await fetch(api);
-//   const data = await res.json();
-//   carDetailsObj["model"] = data.Results[0].Model;
-//   carDetailsObj["modelYear"] = data.Results[0].ModelYear;
-//   console.log(carDetailsObj);
-// };
+var inputElement = document.getElementById("insert-vin");
+var submitButton = document.getElementById("submit-button")
+inputElement.value = 'KM8JN72DX7U587496'
 
-function apiCall() {
-  fetch(api)
-    .then(function (res) {
-      return res.json();
-    })
-    .then(function (data) {
-      carDetailsObj["modelYear"] = data.Results[0].ModelYear;
-      carDetailsObj["make"] = data.Results[0].Make;
-      carDetailsObj["model"] = data.Results[0].Model;
-      carDetailsObj["trim"] = data.Results[0].Trim;
-      carDetailsObj["doors"] = data.Results[0].Doors;
-      carDetailsObj["bodyClass"] = data.Results[0].BodyClass;
-      carDetailsObj["fuelTypePrimary"] = data.Results[0].FuleTypePrimary;
-      carDetailsObj["engineCylinders"] = data.Results[0].EngineCylinders;
-      carDetailsObj["engineHorsePower"] = data.Results[0].EngineHP;
-      carDetailsObj["transmissionStyle"] = data.Results[0].TransmissionStyle;
-      carDetailsObj["manufacturedInCity"] = data.Results[0].PlantCity;
-      carDetailsObj["manufacturedInCountry"] = data.Results[0].PlantCountry;
+let inputValue = ''
+let isValidInput = false
 
 
-      console.log(carDetailsObj);
-    });
+
+
+function isValidLength(input){
+  return input.length === 17
 }
-apiCall();
+
+function handleInput(event){
+  console.log('event: ', event)
+  console.log('key down event: ', event.target.value)
+  inputValue = event.target.value
+  if(!isValidLength(inputValue)){
+    inputElement.style.borderColor = 'red'
+    inputElement.style.borderWidth = '5px'
+    inputElement.style.borderStyle = 'solid'
+   submitButton.disabled = true
+  }else{
+    inputElement.style.borderColor = 'green'
+    inputElement.style.borderWidth = '5px'
+    inputElement.style.borderStyle = 'solid'
+    submitButton.disabled = false
+  }
+}
+
+
+function handleClick(event){
+  console.log('printed click event: ', event)
+ console.log("input value: ", inputElement.value)
+ const url = makeUrl(inputElement.value)
+ window.location.href = `vin-info.html?VIN=${inputElement.value}` 
+}
+
+inputElement.addEventListener('input', handleInput);
+submitButton.addEventListener('click', handleClick);
+
+
+
+
+
+
