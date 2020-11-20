@@ -4,16 +4,22 @@
         <meta charset="UTF-8" />
     <meta name="viewpoint" content="width=device-width, intitial-scale=1.0" />
     <title>Vin Access</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <link rel="stylesheet" href="./assets/css/style.css" />
     </head>
     
-    <!--THIS STARTS THE HEADER AND NAV-->
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">Vin Access</a>
-          </div>
+    <!--THIS STARTS THE NAV-->
+    <body>
+    <nav>
+        <div class="nav-wrapper grey">
+          <a href="#" class="brand-logo">Vin Access</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="#FAQs">FAQs</a></li>
+            <li><a href="#About-Us">About Us</a></li>
+            <li><a href="#Profile">Profile</a></li>
+          </ul>
+        </div>
       </nav>
     ​
     <!--THIS STARTS THE HERO SECTION -->
@@ -24,17 +30,22 @@
             FAST, EASY, & FREE!<br />
             </h2>
         </div>
-        <div class="form">
-            <h3>Insert Your Vin Below</h3>
         <form>
-            <textarea id="insert-vin" placeholder="Insert Vin"></textarea><br />
-            <button class="btn">Submit</button>
+            <div class="row">
+                <form class="col">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="input_text" type="text" data-length="17">
+                      <label for="input_text">Insert Vin</label>
+                    </div>
+                </form>
+              </div>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <i class="material-icons right">send</i></button>
         </form>
     </section>
 
-    <!--THIS STARTS THE VIN INFO FORM SECTION-->
-    <section>
-    </section>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    </body>
     </html>

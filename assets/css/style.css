@@ -4,13 +4,21 @@
     --tertiary-color: #0f8031;
     --quaternary-color: #f7f8f7;
 }
-body {
-    color: var(--primary-color);
+.btn {
+  background-color: var(--secondary-color);
 }
-.navbar-brand {
-    font-weight: bold;
-    font-size: 36px;
-    color:  var(--secondary-color);
+.btn:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+form {
+  border: 3px solid var(--secondary-color);
+  background-color: var(--tertiary-color);
+  color: var(--secondary-color);
+  width: 30%;
+  border-radius: 15px;
+  text-align: center;
+  margin: auto;
 }
 .container {
     background-image: url("../images/Homepage\ -\ Hero\ Image.jpg");
@@ -18,52 +26,17 @@ body {
     padding-bottom: 5%;
 }
 .container h2 {
-    color: var(--secondary-color);
+    color: var(--tertiary-color);
     font-size: 48px;
+    font-weight: bold;
     text-align: center;
     padding: 5%;
 }
-.form {
-    border: 3px solid var(--secondary-color);
-    background-color: var(--tertiary-color);
-    color: var(--secondary-color);
-    width: 50%;
-    border-radius: 15px;
-    text-align: center;
-    margin: auto;
+.card-title {
+  background: var(--tertiary-color)
 }
-.container textarea {
-    width: 50%;
-    margin: 2.5%;
-    font-size: 16px;
-    font-weight: lighter;
-    padding-top: 12px;
-}
-.btn {
-  background-color: white;
-}
-.btn:hover {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    cursor: pointer;
-}
-.hero-2 {
-  margin: auto;
-  height: 400px;
-  width: 400px;
-  border: 3px var(--secondary-color);
-  padding: 10px;
-}
-.vehicle {
+.card-content h3 {
   color: var(--tertiary-color);
-  font-size: 36px;
-  text-align: center;
-  padding: 5%;
-}
-.information {
-  color: var(--secondary-color);
   font-size: 20px;
-  text-align: left;
   padding-left: 10%;
-  padding-top: 2.5%;
 }
