@@ -54,7 +54,7 @@ async function getVehicleData(url) {
     const formattedData = formatData(data);
     console.log("response: ", formattedData);
     return formattedData;
-  } catch (error) {}
+  } catch (error) { }
 }
 
 function addVehicleInfoToPage(data) {
@@ -78,6 +78,20 @@ async function onPageLoad() {
   let vinLookupAddress = makeGovUrl(vinNumberFromUrl);
   const vehicleData = await getVehicleData(vinLookupAddress);
   addVehicleInfoToPage(vehicleData);
+}
+
+// display prior search history from local storage
+function displaySearchHistory() {
+  $("#search-history").empty();
+  search_history.forEach(function (carInfo) {
+    var history_item = $("<li>");
+    history_item.addClass("list-group-item btn btn-light");
+    history_item.text(carInfo);
+    $("#search-history").prepend(history_item);
+  });
+
+  $(".btn").click(getWeather);
+  $(".btn").click(Forecast);
 }
 
 onPageLoad();
