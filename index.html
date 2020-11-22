@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <script defer src="./assets/js/vin_lookup.js"></script>
+    <script defer src="./assets/js/vin_form.js"></script>
 </head>
 
 <!--THIS STARTS THE NAV-->
@@ -38,12 +38,12 @@
                 <form class="col">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="input_text" type="text" data-length="17">
-                            <label for="input_text">Insert Vin</label>
+                            <input id="insert-vin" type="text" data-length="17">
+                            <label for="insert-vin">Insert Vin</label>
                         </div>
                 </form>
             </div>
-            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <button id="submit-button" class="btn waves-effect waves-light" type="submit" name="action">Submit
                 <i class="material-icons right">send</i></button>
         </form>
     </section>
