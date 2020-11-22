@@ -80,18 +80,4 @@ async function onPageLoad() {
   addVehicleInfoToPage(vehicleData);
 }
 
-// display prior search history from local storage
-function displaySearchHistory() {
-  $("#search-history").empty();
-  search_history.forEach(function (carInfo) {
-    var history_item = $("<li>");
-    history_item.addClass("list-group-item btn btn-light");
-    history_item.text(carInfo);
-    $("#search-history").prepend(history_item);
-  });
-
-  $(".btn").click(getWeather);
-  $(".btn").click(Forecast);
-}
-
 onPageLoad();
