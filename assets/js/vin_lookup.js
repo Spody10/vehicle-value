@@ -31,6 +31,39 @@ function formatData(data) {
   return carInfo;
 }
 
+function getUnsplash() {
+  //let clientID = "cjJQ8wK2b7HF8T4MVJ1z-QN03taag9wEgEYkMMhNKfc"
+  let url =
+    "https://api.unsplash.com/search/photos?query=automobile&client_id=cjJQ8wK2b7HF8T4MVJ1z-QN03taag9wEgEYkMMhNKfc";
+
+  fetch(url)
+    .then(function (data) {
+      return data.json();
+    })
+    .then(function (data) {
+      console.log(data);
+
+      if (data.results) {
+        const returnedData = data.results.map((result) => {
+          return result != null &&
+            result.urls != null &&
+            result.urls.small != null
+            ? `<img src=${result.urls.small}>
+             <a href=${result.links.download} target="_blank">
+            `
+            : `<aside>error in inner loop </aside>`;
+        });
+
+        console.log(returnedData.length);
+        let random = Math.random();
+        let totalData = returnedData.length;
+        let randomIndex = Math.floor(random * totalData);
+        let randomImage = returnedData[randomIndex];
+        return $("#results").html(randomImage);
+      }
+    });
+}
+
 function makeGovUrl(value) {
   return `https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/${value}?format=json`;
 }
@@ -81,3 +114,4 @@ async function onPageLoad() {
 }
 
 onPageLoad();
+getUnsplash();
