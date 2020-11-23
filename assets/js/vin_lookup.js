@@ -3,6 +3,7 @@ const LOWERCASE_UPPERCASE_JUNCTION = /([\p{Ll}\d])(\p{Lu})/gu;
 
 // capture instances of repeat uppercase characters followed by lowercase character.
 const REPETITIOUS_UPPERCASE_TO_LOWERCASE = /(\p{Lu}+)(\p{Lu}\p{Ll}+)/gu;
+let search_history;
 
 function camelCaseTo(text, delimter = "-") {
   const isTextValid = typeof text === "string";
@@ -32,7 +33,6 @@ function formatData(data) {
 }
 
 function getUnsplash() {
-  //let clientID = "cjJQ8wK2b7HF8T4MVJ1z-QN03taag9wEgEYkMMhNKfc"
   let url =
     "https://api.unsplash.com/search/photos?query=automobile&client_id=cjJQ8wK2b7HF8T4MVJ1z-QN03taag9wEgEYkMMhNKfc";
 
@@ -67,8 +67,9 @@ function getUnsplash() {
 function makeGovUrl(value) {
   return `https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/${value}?format=json`;
 }
-
+// You will need to save the vin to be able to use the search history
 const PROPERTIES_WE_WANT = [
+  //"VIN",
   "ModelYear",
   "Make",
   "Model",
@@ -86,6 +87,8 @@ async function getVehicleData(url) {
     var data = await response.json();
     const formattedData = formatData(data);
     console.log("response: ", formattedData);
+    // Add the formatted data to the search history
+    addToSearchHistory(formattedData);
     return formattedData;
   } catch (error) {}
 }
@@ -111,6 +114,43 @@ async function onPageLoad() {
   let vinLookupAddress = makeGovUrl(vinNumberFromUrl);
   const vehicleData = await getVehicleData(vinLookupAddress);
   addVehicleInfoToPage(vehicleData);
+  // Load the localStorage search history
+  search_history =
+    JSON.parse(localStorage.getItem("searchHistory")) === null
+      ? []
+      : JSON.parse(localStorage.getItem("searchHistory"));
+  // Populate the search history
+  displaySearchResults();
+}
+// whenever you do a search, just call this method after you get a result and pass that result in
+function addToSearchHistory(itemToAdd) {
+  // Check that this search doesn't already exist in the search history
+  if (search_history.indexOf(itemToAdd) === -1) {
+    // Add the item to the search history
+    search_history.push(itemToAdd);
+    // Update local storage with the new search history
+    localStorage.setItem("searchHistory", JSON.stringify(search_history));
+  }
+}
+
+function displaySearchResults() {
+  // this clears out the search-history ul
+  $("search-history").empty();
+  // we will add each history item to to the search-history ul
+  // you may need to change this to use an anchor tag.  I think that's howe you are searching
+  // just set the href to the url that you would use to search
+  search_history.forEach(function (search) {
+    // create the li
+    var item = $("<li>");
+    // add styles to the li to make it look like a button
+    item.addClass("list-group-item btn btn-light");
+    // create the string of year make model to use
+    var textToAdd = search.ModelYear + search.Make + search.Model;
+    // add the text to the li
+    item.text(search);
+    // add the li to the search-history ul
+    $("#search-history").prepend(item);
+  });
 }
 
 onPageLoad();
