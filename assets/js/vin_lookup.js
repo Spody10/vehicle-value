@@ -87,7 +87,7 @@ async function getVehicleData(url) {
     const formattedData = formatData(data);
     console.log("response: ", formattedData);
     return formattedData;
-  } catch (error) {}
+  } catch (error) { }
 }
 
 function addVehicleInfoToPage(data) {

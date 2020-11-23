@@ -6,46 +6,53 @@
     <meta charset="UTF-8" />
     <meta name="viewpoint" content="width=device-width, intitial-scale=1.0" />
     <title>Vin Access</title>
-    <link rel="#" href="#" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <link rel="stylesheet" href="./assets/css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="./assets/js/vin_form.js"></script>
 
-
 </head>
 
-<!-- THIS STARTS THE HEADER AND NAV -->
-<header>
-    <h1>Vin Access</h1>
-    <nav>
-        <ul>
-            <li>
-                <a href="#Dashboard">Dashboard</a>
-            </li>
-            <li>
-                <a href="#FAQs">FAQs</a>
-            </li>
-            <li>
-                <a href="#WhoWeAre">Who We Are</a>
-            </li>
-        </ul>
-</header>
+<!--THIS STARTS THE NAV-->
 
-<!--THIS STARTS THE HERO SECTION -->
-<section class="hero">
-    <div>
-        <h2>Insert your vin.<br />
-            Get Information.<br />
-            FAST, EASY, AND FREE!<br />
-        </h2>
-    </div>
-    <!--THIS STARTS THE VIN INFO FORM SECTION-->
-    <div class="hero-form">
-        <h3>Insert Your Vin Below</h3>
+<body>
+    <nav>
+        <div class="nav-wrapper grey">
+            <a href="#" class="brand-logo">Vin Access</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#FAQs">FAQs</a></li>
+                <li><a href="#About-Us">About Us</a></li>
+                <li><a href="#Profile">Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+    ​
+    <!--THIS STARTS THE HERO SECTION -->
+    <section class="container">
+        <div>
+            <h2>Insert your vin.<br />
+                Get Information.<br />
+                FAST, EASY, & FREE!<br />
+            </h2>
+        </div>
         <form>
-            <textarea id="insert-vin" placeholder="Insert Vin"></textarea><br />
-            <button id="submit-button">Submit</button>
+            <div class="row">
+                <form class="col">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="insert-vin" type="text" data-length="17">
+                            <label for="insert-vin">Insert Vin</label>
+                        </div>
+                </form>
+            </div>
+            <button id="submit-button" class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <i class="material-icons right">send</i></button>
         </form>
-</section>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+</body>
 
 </html>
