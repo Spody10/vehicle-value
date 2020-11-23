@@ -20,7 +20,7 @@ function camelCaseTo(text, delimter = "-") {
 
 function formatData(data) {
   var result = data.Results[0];
-  console.log("resuts: ", result);
+  console.log("results: ", result);
   var carInfo = {};
   for (var index = 0; index < PROPERTIES_WE_WANT.length; index += 1) {
     const key = PROPERTIES_WE_WANT[index];
@@ -87,7 +87,7 @@ async function getVehicleData(url) {
     const formattedData = formatData(data);
     console.log("response: ", formattedData);
     return formattedData;
-  } catch (error) { }
+  } catch (error) {}
 }
 
 function addVehicleInfoToPage(data) {
