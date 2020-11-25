@@ -2,6 +2,11 @@
 const LOWERCASE_UPPERCASE_JUNCTION = /([\p{Ll}\d])(\p{Lu})/gu;
 // capture instances of repeat uppercase characters followed by lowercase character.
 const REPETITIOUS_UPPERCASE_TO_LOWERCASE = /(\p{Lu}+)(\p{Lu}\p{Ll}+)/gu;
+var search_history =
+  JSON.parse(localStorage.getItem("VIN")) === null
+    ? []
+    : JSON.parse(localStorage.getItem("VIN"));
+
 function camelCaseTo(text, delimter = "-") {
   const isTextValid = typeof text === "string";
   const isSeperatorValid = typeof delimter === "string";
@@ -30,14 +35,19 @@ function makeGovUrl(value) {
   return `https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/${value}?format=json`;
 }
 const PROPERTIES_WE_WANT = [
+  "VIN",
   "ModelYear",
   "Make",
   "Model",
+  "BodyClass",
   "GVWR",
+  "DriveType",
+  "VehicleType",
   "FuelTypePrimary",
   "EngineCylinders",
   "EngineHP",
   "PlantCity",
+  "PlantCountry",
 ];
 async function getVehicleData(url) {
   console.log("url", url);
@@ -68,6 +78,11 @@ async function onPageLoad() {
   let vinLookupAddress = makeGovUrl(vinNumberFromUrl);
   const vehicleData = await getVehicleData(vinLookupAddress);
   addVehicleInfoToPage(vehicleData);
+  search_history =
+    JSON.parse(localStorage.getItem("searchHistory")) === null
+      ? []
+      : JSON.parse(localStorage.getItem("searchHistory"));
+  displaySearchResults();
 }
 function getUnsplash() {
   let url =
@@ -97,5 +112,36 @@ function getUnsplash() {
       }
     });
 }
+// whenever you do a search, just call this method after you get a result and pass that result in
+function addToSearchHistory(itemToAdd) {
+  // Check that this search doesn't already exist in the search history
+  if (search_history.indexOf(itemToAdd) === -1) {
+    // Add the item to the search history
+    search_history.push(itemToAdd);
+    // Update local storage with the new search history
+    localStorage.setItem("searchHistory", JSON.stringify(search_history));
+  }
+}
+// I'm not sure where you want to call this, I put it in the onPageLoad function for now
+function displaySearchResults() {
+  // this clears out the search-history ul
+  $("search-history").empty();
+  // we will add each history item to to the search-history ul
+  // you may need to change this to use an anchor tag.  I think that's howe you are searching
+  // just set the href to the url that you would use to search
+  search_history.forEach(function (search) {
+    // create the li
+    var item = $("<li>");
+    // add styles to the li to make it look like a button
+    item.addClass("list-group-item btn btn-light");
+    // create the string of year make model to use
+    var textToAdd = search.ModelYear + search.Make + search.Model;
+    // add the text to the li
+    item.text(search);
+    // add the li to the search-history ul
+    $("#search-history").prepend(item);
+  });
+}
+
 onPageLoad();
 getUnsplash();
