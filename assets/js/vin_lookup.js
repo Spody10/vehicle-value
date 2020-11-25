@@ -3,8 +3,6 @@ const LOWERCASE_UPPERCASE_JUNCTION = /([\p{Ll}\d])(\p{Lu})/gu;
 // capture instances of repeat uppercase characters followed by lowercase character.
 const REPETITIOUS_UPPERCASE_TO_LOWERCASE = /(\p{Lu}+)(\p{Lu}\p{Ll}+)/gu;
 
-console.log("SEARCH HISTORY: ", localStorage.getItem("searchHistory"));
-
 function camelCaseTo(text, delimter = "-") {
   const isTextValid = typeof text === "string";
   const isSeperatorValid = typeof delimter === "string";
@@ -20,7 +18,7 @@ function camelCaseTo(text, delimter = "-") {
 }
 function formatData(data) {
   var result = data.Results[0];
-  console.log("resuts: ", result);
+
   var carInfo = {};
   for (var index = 0; index < PROPERTIES_WE_WANT.length; index += 1) {
     const key = PROPERTIES_WE_WANT[index];
@@ -48,12 +46,11 @@ const PROPERTIES_WE_WANT = [
   "PlantCountry",
 ];
 async function getVehicleData(url) {
-  console.log("url", url);
   try {
     var response = await fetch(url);
     var data = await response.json();
     const formattedData = formatData(data);
-    console.log("response: ", formattedData);
+
     return formattedData;
   } catch (error) {}
 }
@@ -87,7 +84,6 @@ function getUnsplash() {
       return data.json();
     })
     .then(function (data) {
-      console.log(data);
       if (data.results) {
         const returnedData = data.results.map((result) => {
           return result != null &&
@@ -98,7 +94,7 @@ function getUnsplash() {
             `
             : `<aside>error in inner loop </aside>`;
         });
-        console.log(returnedData.length);
+
         let random = Math.random();
         let totalData = returnedData.length;
         let randomIndex = Math.floor(random * totalData);
@@ -135,7 +131,7 @@ function addToSearchHistory(itemToAdd) {
 
 function displaySearchResults() {
   const searchHistory = getSearchHistory();
-  console.log("search history:", searchHistory);
+
   // this clears out the search-history ul
   $("search-history").empty();
   // we will add each history item to to the search-history ul
@@ -148,7 +144,7 @@ function displaySearchResults() {
     item.addClass("list-group-item btn btn-light");
     // create the string of year make model to use
     var textToAdd = `${search.ModelYear} ${search.Make} ${search.Model}`;
-    console.log("TEXT TO ADD: ", textToAdd);
+
     // add the url to the anchor link associated to the vin number
     var anchor = $(
       `<a href="vin-info.html?VIN=${search.VIN}">${textToAdd}</a>`
