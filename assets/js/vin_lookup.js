@@ -2,10 +2,8 @@
 const LOWERCASE_UPPERCASE_JUNCTION = /([\p{Ll}\d])(\p{Lu})/gu;
 // capture instances of repeat uppercase characters followed by lowercase character.
 const REPETITIOUS_UPPERCASE_TO_LOWERCASE = /(\p{Lu}+)(\p{Lu}\p{Ll}+)/gu;
-var search_history =
-  JSON.parse(localStorage.getItem("VIN")) === null
-    ? []
-    : JSON.parse(localStorage.getItem("VIN"));
+
+console.log("SEARCH HISTORY: ", localStorage.getItem("searchHistory"));
 
 function camelCaseTo(text, delimter = "-") {
   const isTextValid = typeof text === "string";
@@ -78,12 +76,9 @@ async function onPageLoad() {
   let vinLookupAddress = makeGovUrl(vinNumberFromUrl);
   const vehicleData = await getVehicleData(vinLookupAddress);
   addVehicleInfoToPage(vehicleData);
-  search_history =
-    JSON.parse(localStorage.getItem("searchHistory")) === null
-      ? []
-      : JSON.parse(localStorage.getItem("searchHistory"));
-  displaySearchResults();
+  addToSearchHistory(vehicleData);
 }
+
 function getUnsplash() {
   let url =
     "https://api.unsplash.com/search/photos?query=automobile&client_id=cjJQ8wK2b7HF8T4MVJ1z-QN03taag9wEgEYkMMhNKfc";
@@ -112,36 +107,60 @@ function getUnsplash() {
       }
     });
 }
+
+function getSearchHistory() {
+  const searchHistory = window.localStorage.getItem("searchHistory");
+  if (searchHistory) {
+    const parsedSearchResults = JSON.parse(searchHistory);
+    if (parsedSearchResults.length > 10) {
+      window.localStorage.clear();
+      return [];
+    }
+    return parsedSearchResults;
+  }
+  return [];
+}
+
 // whenever you do a search, just call this method after you get a result and pass that result in
 function addToSearchHistory(itemToAdd) {
-  // Check that this search doesn't already exist in the search history
-  if (search_history.indexOf(itemToAdd) === -1) {
-    // Add the item to the search history
-    search_history.push(itemToAdd);
-    // Update local storage with the new search history
-    localStorage.setItem("searchHistory", JSON.stringify(search_history));
+  const searchHistory = getSearchHistory();
+  if (searchHistory.length === 0) {
+    const firstHistory = JSON.stringify([itemToAdd]);
+    localStorage.setItem("searchHistory", firstHistory);
+    return;
   }
+  const nextSearchHistory = searchHistory.concat(itemToAdd);
+  localStorage.setItem("searchHistory", JSON.stringify(nextSearchHistory));
 }
-// I'm not sure where you want to call this, I put it in the onPageLoad function for now
+
 function displaySearchResults() {
+  const searchHistory = getSearchHistory();
+  console.log("search history:", searchHistory);
   // this clears out the search-history ul
   $("search-history").empty();
   // we will add each history item to to the search-history ul
-  // you may need to change this to use an anchor tag.  I think that's howe you are searching
+
   // just set the href to the url that you would use to search
-  search_history.forEach(function (search) {
+  searchHistory.forEach(function (search) {
     // create the li
     var item = $("<li>");
     // add styles to the li to make it look like a button
     item.addClass("list-group-item btn btn-light");
     // create the string of year make model to use
-    var textToAdd = search.ModelYear + search.Make + search.Model;
-    // add the text to the li
-    item.text(search);
+    var textToAdd = `${search.ModelYear} ${search.Make} ${search.Model}`;
+    console.log("TEXT TO ADD: ", textToAdd);
+    // add the url to the anchor link associated to the vin number
+    var anchor = $(
+      `<a href="vin-info.html?VIN=${search.VIN}">${textToAdd}</a>`
+    );
+    // append anchor link to list item
+    item.append(anchor);
+
     // add the li to the search-history ul
     $("#search-history").prepend(item);
   });
 }
-
+// window.localStorage.clear();
 onPageLoad();
 getUnsplash();
+displaySearchResults();
