@@ -26,7 +26,7 @@
 
  ## Usage 
     
- ![Screenshot](/vehicle-value/assets/images/Vehicle_value_img.png)
+ ![Screenshot](/assets/images/Vehicle_value_img.png)
 
  URL: https://spody10.github.io/vehicle-value/
  GitHub: https://github.com/Spody10/vehicle-value.git
